@@ -1,0 +1,30 @@
+body { 
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+
+body .navbar a{
+    padding: 0px 15px;
+    text-decoration: none;
+}
+.nav{
+    justify-content: space-between;
+}
+
+.logo{
+    max-width: 80px;
+    height: auto;
+}
+.navbar{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
+.text-default{
+    color: orange;
+}
