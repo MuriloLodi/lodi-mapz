@@ -9,33 +9,42 @@
 <body class="">
   <div class="apresent">
     <section class="navbar">
-      <div class="container">
-        <div class="list-unstyled">
-          <a href=""><img class="logo rounded-5" src="assets/img/logo.jpeg" alt=""></a>
-        </div>
+      <div class="container nav-inner">
+        <a href=""><img class="logo rounded-5" src="assets/img/logo.jpeg" alt=""></a>
 
-        <div>
-          <ul class="d-flex list-unstyled fw-bold">
-            <li class=""><a href="">Página inicial</a></li>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="">Página inicial</a></li>
             <li><a href="">Loja</a></li>
             <li><a href="">Termos</a></li>
           </ul>
-        </div>
+        </nav>
 
-        <div>
-          <ul class="d-flex list-unstyled">
-            <li><a href=""><i class="fa-solid fa-circle-user"></i><span>Fazer login</span></a></li>
-            <li><a href=""><i class="fa-solid fa-cart-shopping"></i></a></li>
+        <div class="nav-actions">
+          <ul class="nav-actions-list">
+            <li>
+              <a class="flogin" href="">
+                <i class="fa-solid fa-circle-user"></i>
+                <span>Fazer login</span>
+              </a>
+            </li>
+            <li>
+              <a class="cart" href="">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </a>
+            </li>
           </ul>
         </div>
       </div>
     </section>
 
+
     <section class="container">
       <div class="home justify-content-between d-flex">
         <div class="col-6 align-self-center align-items-center">
           <p class="title">Lodz <span>Mapz</span></p>
-          <p class="stitle">Desde 2023, a Lodz Network transforma ideias em mapas com alma. Realismo, leveza e identidade exatamente como o seu projeto merece.</p>
+          <p class="stitle">Desde 2023, a Lodz Network transforma ideias em mapas com alma. Realismo, leveza e
+            identidade exatamente como o seu projeto merece.</p>
           <p class="btn">Ver produtos</p>
         </div>
         <div class="col-4 align-self-center align-items-center">

@@ -2,10 +2,16 @@ body {
     font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
+ul{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
 
 body .navbar a {
     padding: 0px 15px;
     text-decoration: none;
+    font-size: 20px;
 }
 
 .nav {
@@ -38,7 +44,7 @@ body .navbar a {
 }
 
 .mt-6{
-    margin-top: 4rem;
+    margin-top: 6rem;
 }
 
 .apresent {
@@ -88,12 +94,14 @@ body .navbar a {
 
 .home .btn:hover {
     transform: scale(1.05);
+    color: white !important;
 }
 
 .home .btn {
     background-color: #833113;
     border: #cc5c34 solid 1px;
     transition: all 0.3s ease;
+    font-weight: 600;
 }
 
 .btn {
@@ -136,4 +144,59 @@ body .navbar a {
 .best p{
     color: rgb(134, 134, 134);
     font-size: 15px;
+    font-weight: 600;
 }
+
+.flogin{
+    font-size: 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.flogin i{
+    font-size: 30px;
+}
+
+.kart{
+    font-size: 25px;
+}
+
+
+/* Torna a .container da navbar o verdadeiro flex container */
+.navbar .nav-inner{
+  display: flex;
+  align-items: center;          /* verticalmente centralizado */
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Listas horizontais e centralizadas verticalmente */
+.navbar .nav-links,
+.navbar .nav-actions-list{
+  display: flex;
+  align-items: center;          /* garante que ícones e textos fiquem alinhados */
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Todos os links da navbar com a mesma “altura de clique” */
+.navbar a{
+  display: flex;
+  align-items: center;          /* alinha ícone + texto ao centro */
+  gap: 8px;
+  height: 48px;                 /* mesma altura para login e carrinho */
+  padding: 0 10px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #cc5c34;
+}
+
+/* Logo menor para não “puxar” a linha */
+.logo{ max-width: 80px; height: auto; }
+
+/* Ícones */
+.flogin i{ font-size: 30px; line-height: 1; }
+.cart i{ font-size: 25px; line-height: 1; }  /* evita “descer” alguns px */
