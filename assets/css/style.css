@@ -1,21 +1,23 @@
-body { 
-  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+body {
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 
-body .navbar a{
+body .navbar a {
     padding: 0px 15px;
     text-decoration: none;
 }
-.nav{
+
+.nav {
     justify-content: space-between;
 }
 
-.logo{
+.logo {
     max-width: 80px;
     height: auto;
 }
-.navbar{
+
+.navbar {
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -25,6 +27,113 @@ body .navbar a{
     padding-bottom: .5rem;
 }
 
-.text-default{
-    color: orange;
+.navbar a {
+    color: #cc5c34;
+}
+
+
+
+.text-default {
+    color: #cc5c34;
+}
+
+.mt-6{
+    margin-top: 4rem;
+}
+
+.apresent {
+    position: relative;
+    min-height: 80vh;
+    overflow: hidden;
+}
+
+.apresent::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0)),  url("../img/fundo.png") no-repeat center center / cover;
+    filter: blur(8px);
+    transform: scale(1.1);
+    z-index: -1;
+}
+
+.home {
+    margin-top: 130px;
+    padding: 0 12px;
+}
+
+.home .title {
+    font-size: 45px;
+    font-weight: 600;
+    color: white;
+}
+
+.stitle {
+    font-size: 15px;
+    font-weight: 500;
+    color: white;
+    width: 80%;
+}
+
+.home span {
+    font-size: 45px;
+    font-weight: 600;
+    color: #cc5c34;
+    text-shadow: #833113 2px 0 8px;
+}
+
+
+.home .btn:hover {
+    transform: scale(1.05);
+}
+
+.home .btn {
+    background-color: #833113;
+    border: #cc5c34 solid 1px;
+    transition: all 0.3s ease;
+}
+
+.btn {
+    color: white;
+    padding: 10px 21px;
+}
+
+.redes {
+    text-decoration: none;
+    justify-content: space-around;
+}
+
+.redes i {
+  font-size: 40px;              
+  color: #cc5c34;
+  background: #661c028e;
+  border-radius: 50%;        
+  width: 70px;             
+  height: 70px;           
+  display: flex;          
+  align-items: center;       
+  justify-content: center;     
+  transition: 0.4s;
+  border: 1px solid transparent;
+}
+.redes a{
+    text-decoration: none;
+}
+
+.redes i:hover {
+    border: #cc5c34 solid 1px;
+}
+
+.best h2{
+    margin-top: 10px;
+    font-size: 24px;
+    color: white;
+}
+
+.best p{
+    color: rgb(134, 134, 134);
+    font-size: 15px;
 }

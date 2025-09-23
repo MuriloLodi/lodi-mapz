@@ -1,5 +1,5 @@
 <?php
-$HOST = '192.168.0.50'; // IP do PC que será o servidor do banco
+$HOST = '192.168.18.40';
 $DB   = 'loja';
 $USER = 'murilo';
 $PASS = 'Lucy135=';
@@ -12,5 +12,5 @@ try {
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     ]);
 } catch (PDOException $e) {
-    die('Erro ao conectar: ' . $e->getMessage());
+    echo('Erro ao conectar: ' . $e->getMessage());
 }
