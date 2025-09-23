@@ -1,4 +1,4 @@
-<?php
+<?php 
 $HOST = '192.168.18.40';
 $DB   = 'loja';
 $USER = 'murilo';
@@ -14,3 +14,4 @@ try {
 } catch (PDOException $e) {
     echo('Erro ao conectar: ' . $e->getMessage());
 }
+?>

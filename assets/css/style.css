@@ -1,27 +1,19 @@
 body {
     font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background-color: #0c0c0c;
 }
 
-ul{
+
+ul {
     margin-bottom: 0;
     margin-top: 0;
 }
 
 
-body .navbar a {
-    padding: 0px 15px;
-    text-decoration: none;
-    font-size: 20px;
-}
-
 .nav {
     justify-content: space-between;
 }
 
-.logo {
-    max-width: 80px;
-    height: auto;
-}
 
 .navbar {
     position: relative;
@@ -29,8 +21,8 @@ body .navbar a {
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
+    padding-top: .5rem !important;
+    padding-bottom: .5rem !important;
 }
 
 .navbar a {
@@ -43,7 +35,7 @@ body .navbar a {
     color: #cc5c34;
 }
 
-.mt-6{
+.mt-6 {
     margin-top: 6rem;
 }
 
@@ -60,7 +52,7 @@ body .navbar a {
     left: 0;
     width: 100%;
     height: 100%;
-    background:linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0)),  url("../img/fundo.png") no-repeat center center / cover;
+    background: linear-gradient(to top, #0c0c0c, #0c0c0c41), url("../img/fundo.png") no-repeat center center / cover;
     filter: blur(8px);
     transform: scale(1.1);
     z-index: -1;
@@ -91,6 +83,12 @@ body .navbar a {
     text-shadow: #833113 2px 0 8px;
 }
 
+.topvenda span {
+    font-weight: 600;
+    color: #cc5c34;
+
+}
+
 
 .home .btn:hover {
     transform: scale(1.05);
@@ -115,19 +113,20 @@ body .navbar a {
 }
 
 .redes i {
-  font-size: 40px;              
-  color: #cc5c34;
-  background: #661c028e;
-  border-radius: 50%;        
-  width: 70px;             
-  height: 70px;           
-  display: flex;          
-  align-items: center;       
-  justify-content: center;     
-  transition: 0.4s;
-  border: 1px solid transparent;
+    font-size: 40px;
+    color: #cc5c34;
+    background: #661c028e;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.4s;
+    border: 1px solid transparent;
 }
-.redes a{
+
+.redes a {
     text-decoration: none;
 }
 
@@ -135,68 +134,75 @@ body .navbar a {
     border: #cc5c34 solid 1px;
 }
 
-.best h2{
+.best h2 {
     margin-top: 10px;
     font-size: 24px;
     color: white;
 }
 
-.best p{
+.best p {
     color: rgb(134, 134, 134);
     font-size: 15px;
     font-weight: 600;
 }
 
-.flogin{
+.flogin {
     font-size: 20px;
     display: flex;
     gap: 15px;
     align-items: center;
 }
 
-.flogin i{
+.flogin i {
     font-size: 30px;
 }
 
-.kart{
+.kart {
     font-size: 25px;
 }
 
 
-/* Torna a .container da navbar o verdadeiro flex container */
-.navbar .nav-inner{
-  display: flex;
-  align-items: center;          /* verticalmente centralizado */
-  justify-content: space-between;
-  gap: 24px;
+.navbar .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
 }
 
-/* Listas horizontais e centralizadas verticalmente */
 .navbar .nav-links,
-.navbar .nav-actions-list{
-  display: flex;
-  align-items: center;          /* garante que ícones e textos fiquem alinhados */
-  gap: 24px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.navbar .nav-actions-list {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-/* Todos os links da navbar com a mesma “altura de clique” */
-.navbar a{
-  display: flex;
-  align-items: center;          /* alinha ícone + texto ao centro */
-  gap: 8px;
-  height: 48px;                 /* mesma altura para login e carrinho */
-  padding: 0 10px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #cc5c34;
+.navbar a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 48px;
+    padding: 0 10px;
+    text-decoration: none;
+    font-size: 17px;
+    color: #cc5c34;
 }
 
-/* Logo menor para não “puxar” a linha */
-.logo{ max-width: 80px; height: auto; }
 
-/* Ícones */
-.flogin i{ font-size: 30px; line-height: 1; }
-.cart i{ font-size: 25px; line-height: 1; }  /* evita “descer” alguns px */
+.logo {
+    max-width: 70px;
+    height: auto;
+}
+
+.flogin i {
+    font-size: 30px;
+    line-height: 1;
+}
+
+.cart i {
+    font-size: 25px;
+    line-height: 1;
+}
+

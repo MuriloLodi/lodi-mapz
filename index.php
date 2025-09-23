@@ -1,4 +1,8 @@
-<!-- index.php -->
+<?php include 'conexao.php' ?>
+<?php
+$stmt = $pdo->query("SELECT nome, img, preco FROM tb_vendidos ORDER BY id DESC LIMIT 4");
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!doctype html>
 <html lang="pt-br">
 
@@ -6,9 +10,9 @@
   <?php include 'includes/head.php' ?>
 </head>
 
-<body class="">
+<body>
   <div class="apresent">
-    <section class="navbar">
+    <section class="navbar mt-3">
       <div class="container nav-inner">
         <a href=""><img class="logo rounded-5" src="assets/img/logo.jpeg" alt=""></a>
 
@@ -38,11 +42,10 @@
       </div>
     </section>
 
-
     <section class="container">
-      <div class="home justify-content-between d-flex">
+      <div class=" home justify-content-between d-flex">
         <div class="col-6 align-self-center align-items-center">
-          <p class="title">Lodz <span>Mapz</span></p>
+          <p class="title">Lodz <span>Network</span></p>
           <p class="stitle">Desde 2023, a Lodz Network transforma ideias em mapas com alma. Realismo, leveza e
             identidade exatamente como o seu projeto merece.</p>
           <p class="btn">Ver produtos</p>
@@ -56,10 +59,9 @@
           </ul>
         </div>
       </div>
-    </section>
 
-    <section class="container mt-6">
-      <div class="best">
+
+      <div class="best mt-6">
         <div class="d-flex text-center mt-5 justify-content-between">
           <div class=" justify-content-center align-items-center">
             <i class="fa-solid fa-bolt-lightning text-default fs-2"></i>
@@ -79,7 +81,27 @@
         </div>
       </div>
     </section>
+
   </div>
+  <section class="topvenda">
+    <div class="container mt-3">
+      <h3 class="fw-bold display-6 text-white">Mais <span class="">vendidos</span></h3>
+      <div class="row mt-4">
+        <?php foreach ($produtos as $p): ?>
+          <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm border-0 rounded-4">
+              <img src="assets/img/<?= htmlspecialchars($p['img']) ?>" alt="<?= htmlspecialchars($p['nome']) ?>">
+              <div class="card-body text-center">
+                <h5 class="card-title"><?= htmlspecialchars($p['nome']) ?></h5>
+                <p class="card-text fw-bold text-success">R$ <?= number_format($p['preco'], 2, ',', '.') ?></p>
+                <a href="#" class="btn btn-primary btn-sm">Comprar</a>
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </section>
 </body>
 
 </html>
