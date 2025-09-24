@@ -84,22 +84,126 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   </div>
   <section class="topvenda">
-    <div class="container mt-3">
-      <h3 class="fw-bold display-6 text-white">Mais <span class="">vendidos</span></h3>
+    <div class="container mt-3 mb-5">
+
+      <div class="panel mb-5">
+        <img src="assets/img/entrega.png" alt="">
+      </div>
+
+      <h3 class="fw-bold display-6 text-white">Mais <span>vendidos</span></h3>
       <div class="row mt-4">
         <?php foreach ($produtos as $p): ?>
           <div class="col-md-3 mb-4">
-            <div class="card h-100 shadow-sm border-0 rounded-4">
-              <img src="assets/img/<?= htmlspecialchars($p['img']) ?>" alt="<?= htmlspecialchars($p['nome']) ?>">
+            <div class="card h-100 shadow-sm border-0 rounded-4 position-relative">
+              <div class="position-relative">
+                <img src="assets/img/<?= htmlspecialchars($p['img']) ?>" alt="<?= htmlspecialchars($p['nome']) ?>" class="card-img">
+                <div class="overlay">
+                  <button class="btn-overlay">Ver produto</button>
+                </div>
+              </div>
               <div class="card-body text-center">
                 <h5 class="card-title"><?= htmlspecialchars($p['nome']) ?></h5>
-                <p class="card-text fw-bold text-success">R$ <?= number_format($p['preco'], 2, ',', '.') ?></p>
-                <a href="#" class="btn btn-primary btn-sm">Comprar</a>
+                <p class="card-text fw-bold text-preco">R$ <?= number_format($p['preco'], 2, ',', '.') ?></p>
               </div>
             </div>
+
           </div>
         <?php endforeach; ?>
       </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="container d-flex mb-5">
+      <div class="col-12 col-md-4 mb-4 mb-md-0 text-center text-md-left align-self-center">
+        <h2 class="fw-bold display-5  text-white">Perguntas<br><span>Frequentes</span></h2>
+        <a href=""><button class="btn">Ver Produtos</button></a>
+      </div>
+
+      <div class="col-12 col-md-8">
+        <div class="accordion" id="accordionExample">
+
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Como funcionam as encomendas?
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                Você nos envia sua ideia ou necessidade — como localização, tipo de mapa, e estilo desejado — e desenvolvemos o mapeamento sob medida, mantendo sempre o foco em performance e imersão.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item mt-3">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Os mapas pesam muito?
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                Não! Todos os nossos projetos utilizam apenas objetos nativos do MTA, o que garante um mapa extremamente leve e sem impacto no desempenho do servidor.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item mt-3">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                Vocês fazem mapas de qualquer tipo?
+              </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                Sim! Trabalhamos com ambientações urbanas, guettos, rodoviárias, postos, ruas principais, rotatórias, favelas, interiores simples e muito mais. Tudo com realismo e coerência com o estilo visual do jogo.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item mt-3">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                Qual o tempo médio de entrega?
+              </button>
+            </h2>
+            <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                O prazo depende da complexidade do pedido, mas buscamos sempre entregar no menor tempo possível, sem comprometer a qualidade.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item mt-3">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                Como posso acompanhar minha encomenda?
+              </button>
+            </h2>
+            <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                Cada encomenda é registrada e divulgada com um pequeno resumo no nosso canal, com prints e descrição do que foi feito. Assim, você vê nosso compromisso e evolução constante.
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item mt-3">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                Como entro em contato para fazer meu pedido?
+              </button>
+            </h2>
+            <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                Basta nos chamar diretamente no privado ou através do nosso canal de atendimento oficial. Estamos prontos para atender você com agilidade e atenção total.
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
   </section>
 </body>

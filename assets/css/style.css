@@ -83,19 +83,22 @@ ul {
     text-shadow: #833113 2px 0 8px;
 }
 
-.topvenda span {
+.topvenda span,
+.faq span {
     font-weight: 600;
     color: #cc5c34;
 
 }
 
 
-.home .btn:hover {
+.home .btn:hover,
+.faq .btn:hover {
     transform: scale(1.05);
     color: white !important;
 }
 
-.home .btn {
+.home .btn,
+.faq .btn {
     background-color: #833113;
     border: #cc5c34 solid 1px;
     transition: all 0.3s ease;
@@ -206,3 +209,100 @@ ul {
     line-height: 1;
 }
 
+.panel{
+    padding: 10px;
+    background-color: #7b2100;
+    border-radius: 20px;
+}
+
+.panel img{
+    height: auto;
+    border-radius: 20px;
+    width: 100%;
+}
+
+.topvenda .card{
+    background-color: #181818;
+}
+
+.topvenda .card-title{
+    color: white;
+}
+
+.card img{
+    border-radius: 1rem 1rem 0 0;
+}
+
+.card{
+    transition: 0.4s;
+}
+
+.text-preco{
+    color: #cc5c34;
+}
+
+.card.position-relative {
+    overflow: hidden;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 1rem 1rem 0 0;
+}
+
+.position-relative:hover .overlay {
+    opacity: 1;
+}
+
+.btn-overlay {
+    background-color: #cc5c34;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.btn-overlay:hover {
+    transform: scale(1.05);
+}
+
+.card:hover{
+    transform: scale(1.05);
+}
+
+.faq .accordion-item>.accordion-header .accordion-button,
+.faq .accordion-item,
+.faq .accordion-item:last-of-type>.accordion-header .accordion-button.collapsed{
+    border-radius: 20px !important;
+    border: #cc5c34 1px solid!important;
+    --bs-accordion-active-bg : none;
+    --bs-accordion-btn-focus-box-shadow: none;
+    --bs-accordion-bg:none;
+}
+
+.faq .accordion{
+    --bs-accordion-bg:none;
+}
+
+.faq .accordion-button,
+.faq .accordion-item{
+    color: white;
+}
+
+
+.accordion-button:not(.collapsed) {
+    box-shadow: none;
+}
