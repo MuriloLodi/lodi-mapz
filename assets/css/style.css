@@ -41,7 +41,7 @@ ul {
 
 footer {
     position: relative;
-    min-height: 25vh;
+    min-height: 15vh;
     overflow: hidden;
 }
 .apresent {
@@ -57,7 +57,7 @@ footer::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, #0c0c0c, #0c0c0c41), url("https://www.mixmods.com.br/wp-content/uploads/2022/07/gta-sa-mta-heaven-roleplay-brasileiro-brasil-sao-paulo-mod-artwork-loadscreen-scaled.jpg") no-repeat center center / cover;
+    background: linear-gradient(to bottom, #0c0c0c, #0c0c0c41), url("../img/footer.png") no-repeat center center / cover;
     filter: blur(8px);
     transform: scale(1.1);
     z-index: -1;
@@ -150,7 +150,8 @@ footer .redes {
     border: 1px solid transparent;
 }
 
-.redes a {
+.redes a,
+footer a {
     text-decoration: none;
 }
 
@@ -351,4 +352,66 @@ footer .logo .copy{
     font-size: 11px;
     font-weight: 600;
     margin-bottom: 0;
+}
+
+.nav-toggle {
+  display: none;
+  font-size: 30px;
+  background: none;
+  border: #333 2px solid;
+  border-radius: 20%;
+  cursor: pointer;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+    color: #333;
+  }
+
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px; 
+    left: 0;
+    right: 0;
+    background:  #1d1c1c;
+    padding: 15px;
+  }
+
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .nav-links,
+  .nav-actions-list {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+}
+
+footer .text-sub{
+    color: white;
+    font-size: 15px;
+    font-weight: 400;
+}
+.is-border {
+    border: 1px solid #ececec;
+    border-radius: 0;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    pointer-events: none;
+}
+
+.text-gray{
+    color: #636363;
 }

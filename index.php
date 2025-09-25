@@ -16,28 +16,25 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <div class="container nav-inner">
         <a href=""><img class="logo rounded-5" src="assets/img/logo.jpeg" alt=""></a>
 
-        <nav>
-          <ul class="nav-links">
-            <li><a href="">Página inicial</a></li>
-            <li><a href="">Loja</a></li>
-            <li><a href="">Termos</a></li>
-          </ul>
-        </nav>
+        <button class="nav-toggle" aria-label="Abrir menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
 
-        <div class="nav-actions">
-          <ul class="nav-actions-list">
-            <li>
-              <a class="flogin" href="">
-                <i class="fa-solid fa-circle-user"></i>
-                <span>Fazer login</span>
-              </a>
-            </li>
-            <li>
-              <a class="cart" href="">
-                <i class="fa-solid fa-cart-shopping"></i>
-              </a>
-            </li>
-          </ul>
+        <div class="nav-menu mt-3">
+          <nav>
+            <ul class="nav-links">
+              <li><a href="">Página inicial</a></li>
+              <li><a href="">Loja</a></li>
+              <li><a href="">Termos</a></li>
+            </ul>
+          </nav>
+
+          <div class="nav-actions">
+            <ul class="nav-actions-list">
+              <li><a class="flogin" href=""><i class="fa-solid fa-circle-user"></i><span>Fazer login</span></a></li>
+              <li><a class="cart" href=""><i class="fa-solid fa-cart-shopping"></i></a></li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
@@ -115,7 +112,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </section>
 
   <section class="faq">
-    <div class="container d-flex mb-5">
+    <div class="container mb-5">
       <div class="row">
         <div class="col-12 col-md-4 mb-4 mb-md-0 text-center text-md-left align-self-center">
           <h2 class="fw-bold display-5  text-white">Perguntas<br><span>Frequentes</span></h2>
@@ -223,19 +220,22 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   <footer>
     <div class="container">
-      <div class="row mt-5">
-        <div class="col logo align-self-center text-center">
+      <div class="row mt-3 mb-3">
+        <div class="col-sm logo align-self-center text-center">
           <img class="rounded-5" src="assets/img/logo.jpeg" alt="">
           <p class="copy">Todos os direitos reservados</p>
         </div>
-        <div class="col">
-          <p>Links</p>
+        <div class="col-sm">
+          <p class="fw-bold text-default mb-0">Links</p>
+          <a class="text-sub" href="">Produtos</a>
         </div>
-        <div class="col">
-          <p>Importante</p>
+        <div class="col-sm">
+          <p class="fw-bold text-default mb-0">Importante</p>
+          <a class="text-sub" href="">Termos de uso</a>
+
         </div>
-        <div class="col">
-          <p>Sociais</p>
+        <div class="col-sm">
+          <p class="fw-bold text-default mb-0">Sociais</p>
           <ul class="d-flex redes list-unstyled">
             <li><a href=""><i class="fa-brands fa-youtube"></i></a></li>
             <li><a href=""><i class="fa-brands fa-discord"></i></a></li>
@@ -244,10 +244,16 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
           </ul>
         </div>
       </div>
+      <div class="is-border mb-2"></div>
+        <div class="copyr justify-content-between d-flex">
+          <p class="text-gray">Copyright 2025 © Lodz Network • CNPJ xx.xxx.xxx/xxxx-xx • Toledo/PR</p>
+          <p class=" text-gray">Desenvolvimento: Lodi Service</p>
+      </div>
     </div>
     </div>
-
   </footer>
+
+  <?php include 'includes/scripts.php' ?>
 </body>
 
 </html>
