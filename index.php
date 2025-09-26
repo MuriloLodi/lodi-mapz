@@ -1,5 +1,6 @@
 <?php
 include 'conexao.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
 
 /**
  * Retorna os produtos mais vendidos.
@@ -53,7 +54,25 @@ $produtos = getMaisVendidos($pdo);
 
           <div class="nav-actions">
             <ul class="nav-actions-list">
-              <li><a class="flogin" href=""><i class="fa-solid fa-circle-user"></i><span>Fazer login</span></a></li>
+              <?php if (!empty($_SESSION['auth'])): 
+                $u = $_SESSION['auth'];
+                $avatarUrl = !empty($u['avatar'])
+                  ? "https://cdn.discordapp.com/avatars/{$u['discord_id']}/{$u['avatar']}.png?size=64"
+                  : "https://cdn.discordapp.com/embed/avatars/0.png";
+              ?>
+                <li class="d-flex align-items-center">
+                  <img src="<?= htmlspecialchars($avatarUrl) ?>" alt="avatar" width="28" height="28" class="rounded-circle me-2">
+                  <span class="text-white me-2"><?= htmlspecialchars($u['global_name'] ?: $u['username']) ?></span>
+                  <a href="logout.php" class="btn btn-sm btn-outline-light">Sair</a>
+                </li>
+              <?php else: ?>
+                <li>
+                  <a class="flogin" href="login_discord.php">
+                    <i class="fa-brands fa-discord"></i>
+                    <span>Entrar com Discord</span>
+                  </a>
+                </li>
+              <?php endif; ?>
               <li><a class="cart" href=""><i class="fa-solid fa-cart-shopping"></i></a></li>
             </ul>
           </div>
