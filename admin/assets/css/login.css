@@ -1,0 +1,37 @@
+body {
+    max-height: 100vh;
+}
+
+.gradient-custom-2 {
+    background: url("../img/fundo.png") no-repeat right center;
+    background-size: cover;
+}
+
+.gradient-custom-1 {
+    background: #cc5c34;
+
+}
+
+.gradient-custom-1:hover {
+    background: #4d1602;
+
+}
+
+@media (min-width: 768px) {
+    .gradient-form {
+        height: 100vh !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .gradient-custom-2 {
+        border-top-right-radius: .3rem;
+        border-bottom-right-radius: .3rem;
+    }
+}
+
+.entrar {
+    height: 40px;
+    width: auto;
+    border-radius: 20px;
+}

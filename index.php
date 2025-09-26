@@ -1,8 +1,30 @@
-<?php include 'conexao.php' ?>
 <?php
-$stmt = $pdo->query("SELECT nome, img, preco FROM tb_vendidos ORDER BY id DESC LIMIT 4");
-$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+include 'conexao.php';
+
+/**
+ * Retorna os produtos mais vendidos.
+ *
+ * @param PDO $pdo Conexão PDO
+ * @param int $limit Quantidade de produtos
+ * @return array
+ */
+function getMaisVendidos(PDO $pdo, int $limit = 4): array
+{
+  $stmt = $pdo->prepare("
+        SELECT p.nome, p.imagem, p.preco
+        FROM tb_vendidos v
+        JOIN tb_produtos p ON v.produto_id = p.id
+        ORDER BY v.posicao ASC
+        LIMIT :limit
+    ");
+  $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+  $stmt->execute();
+  return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+$produtos = getMaisVendidos($pdo);
 ?>
+
 <!doctype html>
 <html lang="pt-br">
 
@@ -14,7 +36,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <div class="apresent">
     <section class="navbar mt-3">
       <div class="container nav-inner">
-        <a href=""><img class="logo rounded-5" src="assets/img/logo.jpeg" alt=""></a>
+        <a href="index.php"><img class="logo rounded-5" src="assets/img/logo.jpeg" alt=""></a>
 
         <button class="nav-toggle" aria-label="Abrir menu">
           <i class="fa-solid fa-bars"></i>
@@ -23,9 +45,9 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="nav-menu mt-3">
           <nav>
             <ul class="nav-links">
-              <li><a href="">Página inicial</a></li>
-              <li><a href="">Loja</a></li>
-              <li><a href="">Termos</a></li>
+              <li><a href="index.php">Página inicial</a></li>
+              <li><a href="loja.php">Produtos</a></li>
+              <li><a href="termos.php">Termos</a></li>
             </ul>
           </nav>
 
@@ -82,41 +104,41 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
   </div>
   <section class="topvenda">
     <div class="container mt-5 mb-5">
-
-      <div class="panel mb-5">
-        <img src="assets/img/entrega.png" alt="">
-      </div>
-
       <h3 class="fw-bold display-6 text-white">Mais <span>vendidos</span></h3>
       <div class="row mt-4">
-        <?php foreach ($produtos as $p): ?>
-          <div class="col-md-3 mb-4">
-            <div class="card h-100 shadow-sm border-0 rounded-4 position-relative">
-              <div class="position-relative">
-                <img src="assets/img/<?= htmlspecialchars($p['img']) ?>" alt="<?= htmlspecialchars($p['nome']) ?>"
-                  class="card-img">
-                <div class="overlay">
-                  <button class="btn-overlay">Ver produto</button>
+        <?php if ($produtos): ?>
+          <?php foreach ($produtos as $p): ?>
+            <div class="col-md-3 mb-4">
+              <div class="card h-100 shadow-sm border-0 rounded-4 position-relative">
+                <div class="position-relative">
+                  <img src="assets/img/<?= htmlspecialchars($p['imagem']) ?>"
+                    alt="<?= htmlspecialchars($p['nome']) ?>"
+                    class="card-img">
+                  <div class="overlay">
+                    <button class="btn-overlay">Ver produto</button>
+                  </div>
+                </div>
+                <div class="card-body text-center">
+                  <h5 class="card-title"><?= htmlspecialchars($p['nome']) ?></h5>
+                  <p class="card-text fw-bold text-preco">R$ <?= number_format($p['preco'], 2, ',', '.') ?></p>
                 </div>
               </div>
-              <div class="card-body text-center">
-                <h5 class="card-title"><?= htmlspecialchars($p['nome']) ?></h5>
-                <p class="card-text fw-bold text-preco">R$ <?= number_format($p['preco'], 2, ',', '.') ?></p>
-              </div>
             </div>
-
-          </div>
-        <?php endforeach; ?>
+          <?php endforeach; ?>
+        <?php else: ?>
+          <p class="text-white">Nenhum produto mais vendido cadastrado.</p>
+        <?php endif; ?>
       </div>
     </div>
   </section>
+
 
   <section class="faq">
     <div class="container mb-5">
       <div class="row">
         <div class="col-12 col-md-4 mb-4 mb-md-0 text-center text-md-left align-self-center">
           <h2 class="fw-bold display-5  text-white">Perguntas<br><span>Frequentes</span></h2>
-          <a href=""><button class="btn">Ver Produtos</button></a>
+          <a href="loja.php"><button class="btn">Ver Produtos</button></a>
         </div>
 
         <div class="col-12 col-md-8">
@@ -227,11 +249,11 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <div class="col-sm">
           <p class="fw-bold text-default mb-0">Links</p>
-          <a class="text-sub" href="">Produtos</a>
+          <a class="text-sub" href="loja.php">Produtos</a>
         </div>
         <div class="col-sm">
           <p class="fw-bold text-default mb-0">Importante</p>
-          <a class="text-sub" href="">Termos de uso</a>
+          <a class="text-sub" href="termos.php">Termos de uso</a>
 
         </div>
         <div class="col-sm">
@@ -245,9 +267,9 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
       </div>
       <div class="is-border mb-2"></div>
-        <div class="copyr justify-content-between d-flex">
-          <p class="text-gray">Copyright 2025 © Lodz Network • CNPJ xx.xxx.xxx/xxxx-xx • Toledo/PR</p>
-          <p class=" text-gray">Desenvolvimento: Lodi Service</p>
+      <div class="copyr justify-content-between d-flex">
+        <p class="text-gray">Copyright 2025 © Lodz Network • CNPJ xx.xxx.xxx/xxxx-xx • Toledo/PR</p>
+        <p class=" text-gray">Desenvolvimento: Lodi Service</p>
       </div>
     </div>
     </div>
