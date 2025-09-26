@@ -13,12 +13,21 @@ $total_vendas   = $pdo->query("SELECT COUNT(*) FROM tb_vendas")->fetchColumn();
 $total_lucro    = $pdo->query("SELECT SUM(total) FROM tb_vendas")->fetchColumn() ?? 0;
 
 $stmt = $pdo->query("
-    SELECT DATE_FORMAT(criado_em,'%b/%Y') as mes, SUM(total) as total
-    FROM tb_vendas
-    WHERE criado_em >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
-    GROUP BY YEAR(criado_em), MONTH(criado_em)
-    ORDER BY MIN(criado_em)
+    SELECT 
+        DATE_FORMAT(d.mes, '%b/%Y') AS mes,
+        COALESCE(SUM(v.total), 0) AS total
+    FROM (
+        SELECT DATE_SUB(LAST_DAY(CURDATE()), INTERVAL n MONTH) AS mes
+        FROM (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5) AS nums
+    ) d
+    LEFT JOIN tb_vendas v
+        ON YEAR(v.criado_em) = YEAR(d.mes)
+       AND MONTH(v.criado_em) = MONTH(d.mes)
+    GROUP BY d.mes
+    ORDER BY d.mes
 ");
+
+
 $vendas_mensais = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $labels = json_encode(array_column($vendas_mensais, 'mes'));
 $data   = json_encode(array_column($vendas_mensais, 'total'));
