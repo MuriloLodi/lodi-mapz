@@ -1,11 +1,9 @@
 <?php
-// callback_discord.php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 require_once __DIR__ . '/libs/discord_oauth.php';
-require_once __DIR__ . '/conexao.php'; // $conn
+require_once __DIR__ . '/conexao.php';
 
-// Proteções básicas
 if (!isset($_GET['state']) || $_GET['state'] !== ($_SESSION['oauth2_state'] ?? null)) {
   http_response_code(400);
   exit('State inválido. Tente novamente.');
@@ -18,16 +16,11 @@ if (!isset($_GET['code'])) {
 }
 
 try {
-  // Troca code por token
   $token = discord_exchange_code($_GET['code']);
 
-  // Busca dados do usuário
   $me = discord_api_me($token['access_token']);
 
-  // Upsert no banco
-  $user = upsert_discord_user($conn, $me, $token);
-
-  // Seta sessão da tua aplicação
+  $user = upsert_discord_user($pdo, $me, $token);
   $_SESSION['auth'] = [
     'provider'    => 'discord',
     'discord_id'  => $user['discord_id'],
@@ -37,7 +30,6 @@ try {
     'avatar'      => $user['avatar'],
   ];
 
-  // Redireciona para home ou painel
   header('Location: /lodz-mapz/index.php');
   exit;
 

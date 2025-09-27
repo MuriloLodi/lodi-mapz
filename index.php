@@ -54,22 +54,26 @@ $produtos = getMaisVendidos($pdo);
 
           <div class="nav-actions">
             <ul class="nav-actions-list">
-              <?php if (!empty($_SESSION['auth'])): 
+              <?php if (!empty($_SESSION['auth'])):
                 $u = $_SESSION['auth'];
                 $avatarUrl = !empty($u['avatar'])
                   ? "https://cdn.discordapp.com/avatars/{$u['discord_id']}/{$u['avatar']}.png?size=64"
                   : "https://cdn.discordapp.com/embed/avatars/0.png";
               ?>
-                <li class="d-flex align-items-center">
-                  <img src="<?= htmlspecialchars($avatarUrl) ?>" alt="avatar" width="28" height="28" class="rounded-circle me-2">
-                  <span class="text-white me-2"><?= htmlspecialchars($u['global_name'] ?: $u['username']) ?></span>
-                  <a href="logout.php" class="btn btn-sm btn-outline-light">Sair</a>
-                </li>
+                <div class="btn-group">
+                  <button class="btn btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="<?= htmlspecialchars($avatarUrl) ?>" alt="avatar" width="28" height="28" class="rounded-circle me-2">
+                    <span class=" me-2"><?= htmlspecialchars($u['global_name'] ?: $u['username']) ?></span>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <a href="logout.php" class="btn text-black  btn-sm btn-outline-light">Sair</a>
+                  </ul>
+                </div>
               <?php else: ?>
                 <li>
                   <a class="flogin" href="login_discord.php">
-                    <i class="fa-brands fa-discord"></i>
-                    <span>Entrar com Discord</span>
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span>Fazer Login</span>
                   </a>
                 </li>
               <?php endif; ?>

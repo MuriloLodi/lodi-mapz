@@ -1,5 +1,4 @@
 <?php
-// libs/discord_oauth.php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 require_once __DIR__ . '/../includes/config.php';
@@ -80,38 +79,40 @@ function discord_api_me(string $accessToken): array {
   return $json;
 }
 
-function upsert_discord_user(mysqli $conn, array $me, array $token): array {
-  $discordId = $conn->real_escape_string($me['id']);
-  $username  = $conn->real_escape_string($me['username'] ?? '');
-  $global    = $conn->real_escape_string($me['global_name'] ?? '');
-  $email     = $conn->real_escape_string($me['email'] ?? '');
-  $avatar    = $conn->real_escape_string($me['avatar'] ?? '');
-  $locale    = $conn->real_escape_string($me['locale'] ?? '');
-  $mfa       = !empty($me['mfa_enabled']) ? 1 : 0;
+function upsert_discord_user(PDO $pdo, array $me, array $token): array {
+    $expiresIn = (int)($token['expires_in'] ?? 0);
+    $expiresAt = $expiresIn ? date('Y-m-d H:i:s', time() + $expiresIn) : null;
 
-  $accessToken  = $conn->real_escape_string($token['access_token'] ?? '');
-  $refreshToken = $conn->real_escape_string($token['refresh_token'] ?? '');
-  $expiresIn    = (int)($token['expires_in'] ?? 0);
-  $expiresAt    = $expiresIn ? date('Y-m-d H:i:s', time() + $expiresIn) : null;
+    $stmt = $pdo->prepare("
+        INSERT INTO users_discord 
+        (discord_id, username, global_name, email, avatar, locale, mfa_enabled, access_token, refresh_token, token_expires_at)
+        VALUES (:discord_id, :username, :global_name, :email, :avatar, :locale, :mfa_enabled, :access_token, :refresh_token, :token_expires_at)
+        ON DUPLICATE KEY UPDATE
+          username = VALUES(username),
+          global_name = VALUES(global_name),
+          email = VALUES(email),
+          avatar = VALUES(avatar),
+          locale = VALUES(locale),
+          mfa_enabled = VALUES(mfa_enabled),
+          access_token = VALUES(access_token),
+          refresh_token = VALUES(refresh_token),
+          token_expires_at = VALUES(token_expires_at)
+    ");
 
-  $expiresSql   = $expiresAt ? "'".$conn->real_escape_string($expiresAt)."'" : "NULL";
+    $stmt->execute([
+        ':discord_id'    => $me['id'],
+        ':username'      => $me['username'] ?? '',
+        ':global_name'   => $me['global_name'] ?? '',
+        ':email'         => $me['email'] ?? '',
+        ':avatar'        => $me['avatar'] ?? '',
+        ':locale'        => $me['locale'] ?? '',
+        ':mfa_enabled'   => !empty($me['mfa_enabled']) ? 1 : 0,
+        ':access_token'  => $token['access_token'] ?? '',
+        ':refresh_token' => $token['refresh_token'] ?? '',
+        ':token_expires_at' => $expiresAt,
+    ]);
 
-  $sql = "
-    INSERT INTO users_discord (discord_id, username, global_name, email, avatar, locale, mfa_enabled, access_token, refresh_token, token_expires_at)
-    VALUES ($discordId, '$username', '$global', '$email', '$avatar', '$locale', $mfa, '$accessToken', '$refreshToken', $expiresSql)
-    ON DUPLICATE KEY UPDATE
-      username = VALUES(username),
-      global_name = VALUES(global_name),
-      email = VALUES(email),
-      avatar = VALUES(avatar),
-      locale = VALUES(locale),
-      mfa_enabled = VALUES(mfa_enabled),
-      access_token = VALUES(access_token),
-      refresh_token = VALUES(refresh_token),
-      token_expires_at = VALUES(token_expires_at)
-  ";
-  if (!$conn->query($sql)) throw new Exception('Erro ao salvar usuário: '.$conn->error);
-
-  $res = $conn->query("SELECT * FROM users_discord WHERE discord_id = $discordId LIMIT 1");
-  return $res ? $res->fetch_assoc() : [];
+    $stmt = $pdo->prepare("SELECT * FROM users_discord WHERE discord_id = :id LIMIT 1");
+    $stmt->execute([':id' => $me['id']]);
+    return $stmt->fetch() ?: [];
 }
