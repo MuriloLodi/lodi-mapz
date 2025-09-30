@@ -30,6 +30,11 @@
                         Usuários
                     </a>
                 </li>
+                <li>
+                    <a href="cupons.php" class="nav-link <?php echo ($current_page == 'cupons.php') ? 'active' : 'text-white'; ?>">
+                        Cupons
+                    </a>
+                </li>
             </ul>
             <hr />
             <div class="dropdown">

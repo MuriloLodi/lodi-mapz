@@ -38,6 +38,9 @@ $stmt = $pdo->query("
     ORDER BY d.mes
 ");
 
+$stmt = $pdo->query("SELECT COUNT(*) as total FROM tb_cupons");
+$total_cupons = $stmt->fetch()['total'];
+
 $vendas_mensais = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $labels = json_encode(array_column($vendas_mensais, 'mes'));
 $data = json_encode(array_column($vendas_mensais, 'total'));
@@ -80,6 +83,12 @@ $data = json_encode(array_column($vendas_mensais, 'total'));
                         <div class="card p-3 text-center bg-warning text-white">
                             <h5>Vendas</h5>
                             <h2><?php echo $total_vendas; ?></h2>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card p-3 text-center bg-info text-white">
+                            <h5>Cupons</h5>
+                            <h2><?php echo $total_cupons; ?></h2>
                         </div>
                     </div>
                     <div class="col-md-3">

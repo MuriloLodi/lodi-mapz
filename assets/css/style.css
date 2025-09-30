@@ -626,3 +626,31 @@ footer .text-sub {
 .loja .col-md-3 .card{
     color: white;
 }
+
+.headerloja{
+    background: #1d1c1c;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.loja .row{
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.form-control.bg-dark,
+.form-select.bg-dark {
+    background-color: #0f1420 !important;
+    color: #fff !important;
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 2px #cc5c34;
+}
+
+.input-group-text {
+    cursor: pointer;
+}
