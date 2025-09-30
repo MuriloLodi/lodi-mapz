@@ -8,27 +8,30 @@ if (!isset($_SESSION["admin_id"])) {
 }
 
 if (isset($_POST['salvar'])) {
-    $ids = $_POST['produto'];
+    $ids = $_POST['produto'] ?? [];
     foreach ($ids as $posicao => $produto_id) {
+        $produto_id = intval($produto_id);
+        $posicao_db = $posicao + 1;
         $stmtCheck = $pdo->prepare("SELECT * FROM tb_vendidos WHERE posicao = ?");
-        $stmtCheck->execute([$posicao + 1]);
+        $stmtCheck->execute([$posicao_db]);
+
         if ($stmtCheck->rowCount() > 0) {
             $stmtUpdate = $pdo->prepare("UPDATE tb_vendidos SET produto_id = ? WHERE posicao = ?");
-            $stmtUpdate->execute([$produto_id, $posicao + 1]);
+            $stmtUpdate->execute([$produto_id, $posicao_db]);
         } else {
             $stmtInsert = $pdo->prepare("INSERT INTO tb_vendidos (produto_id, posicao) VALUES (?, ?)");
-            $stmtInsert->execute([$produto_id, $posicao + 1]);
+            $stmtInsert->execute([$produto_id, $posicao_db]);
         }
     }
     $msg = "Produtos mais vendidos atualizados com sucesso!";
 }
 
 $stmt = $pdo->query("SELECT * FROM tb_produtos ORDER BY nome ASC");
-$produtos = $stmt->fetchAll();
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 $vendidos = [];
 $stmtVendidos = $pdo->query("SELECT * FROM tb_vendidos ORDER BY posicao ASC");
-while ($row = $stmtVendidos->fetch()) {
+foreach ($stmtVendidos->fetchAll(PDO::FETCH_ASSOC) as $row) {
     $vendidos[$row['posicao']] = $row['produto_id'];
 }
 ?>
@@ -56,11 +59,15 @@ while ($row = $stmtVendidos->fetch()) {
                             <label>Posição <?php echo $i; ?></label>
                             <select name="produto[]" class="form-select" required>
                                 <option value="">-- Selecionar Produto --</option>
-                                <?php foreach ($produtos as $p): ?>
-                                    <option value="<?php echo $p['id']; ?>" <?php if (isset($vendidos[$i]) && $vendidos[$i] == $p['id']) echo "selected"; ?>>
-                                        <?php echo $p['nome']; ?>
-                                    </option>
-                                <?php endforeach; ?>
+                                <?php if ($produtos): ?>
+                                    <?php foreach ($produtos as $p): ?>
+                                        <option value="<?= $p['id']; ?>" <?= (isset($vendidos[$i]) && $vendidos[$i] == $p['id']) ? "selected" : ""; ?>>
+                                            <?= htmlspecialchars($p['nome']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <option value="">Nenhum produto cadastrado</option>
+                                <?php endif; ?>
                             </select>
                         </div>
                     <?php endfor; ?>

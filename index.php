@@ -34,56 +34,8 @@ $produtos = getMaisVendidos($pdo);
 </head>
 
 <body>
+  <?php include 'includes/header.php' ?>
   <div class="apresent">
-    <section class="navbar mt-3">
-      <div class="container nav-inner">
-        <a href="index.php"><img class="logo rounded-5" src="assets/img/logo.jpeg" alt=""></a>
-
-        <button class="nav-toggle" aria-label="Abrir menu">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-
-        <div class="nav-menu mt-3">
-          <nav>
-            <ul class="nav-links">
-              <li><a href="index.php">Página inicial</a></li>
-              <li><a href="loja.php">Produtos</a></li>
-              <li><a href="termos.php">Termos</a></li>
-            </ul>
-          </nav>
-
-          <div class="nav-actions">
-            <ul class="nav-actions-list">
-              <?php if (!empty($_SESSION['auth'])):
-                $u = $_SESSION['auth'];
-                $avatarUrl = !empty($u['avatar'])
-                  ? "https://cdn.discordapp.com/avatars/{$u['discord_id']}/{$u['avatar']}.png?size=64"
-                  : "https://cdn.discordapp.com/embed/avatars/0.png";
-              ?>
-                <div class="btn-group">
-                  <button class="btn btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="<?= htmlspecialchars($avatarUrl) ?>" alt="avatar" width="28" height="28" class="rounded-circle me-2">
-                    <span class=" me-2"><?= htmlspecialchars($u['global_name'] ?: $u['username']) ?></span>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <a href="logout.php" class="btn text-black  btn-sm btn-outline-light">Sair</a>
-                  </ul>
-                </div>
-              <?php else: ?>
-                <li>
-                  <a class="flogin" href="login_discord.php">
-                    <i class="fa-solid fa-circle-user"></i>
-                    <span>Fazer Login</span>
-                  </a>
-                </li>
-              <?php endif; ?>
-              <li><a class="cart" href=""><i class="fa-solid fa-cart-shopping"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="container">
       <div class=" home justify-content-between d-flex row">
         <div class="col align-self-center align-items-center">
@@ -263,40 +215,7 @@ $produtos = getMaisVendidos($pdo);
     </div>
   </section>
 
-  <footer>
-    <div class="container">
-      <div class="row mt-3 mb-3">
-        <div class="col-sm logo align-self-center text-center">
-          <img class="rounded-5" src="assets/img/logo.jpeg" alt="">
-          <p class="copy">Todos os direitos reservados</p>
-        </div>
-        <div class="col-sm">
-          <p class="fw-bold text-default mb-0">Links</p>
-          <a class="text-sub" href="loja.php">Produtos</a>
-        </div>
-        <div class="col-sm">
-          <p class="fw-bold text-default mb-0">Importante</p>
-          <a class="text-sub" href="termos.php">Termos de uso</a>
-
-        </div>
-        <div class="col-sm">
-          <p class="fw-bold text-default mb-0">Sociais</p>
-          <ul class="d-flex redes list-unstyled">
-            <li><a href=""><i class="fa-brands fa-youtube"></i></a></li>
-            <li><a href=""><i class="fa-brands fa-discord"></i></a></li>
-            <li><a href=""><i class="fa-brands fa-tiktok"></i></a></li>
-            <li><a href=""><i class="fa-brands fa-instagram"></i></a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="is-border mb-2"></div>
-      <div class="copyr justify-content-between d-flex">
-        <p class="text-gray">Copyright 2025 © Lodz Network • CNPJ xx.xxx.xxx/xxxx-xx • Toledo/PR</p>
-        <p class=" text-gray">Desenvolvimento: Lodi Service</p>
-      </div>
-    </div>
-    </div>
-  </footer>
+  <?php include 'includes/footer.php' ?>
 
   <?php include 'includes/scripts.php' ?>
 </body>
