@@ -275,6 +275,12 @@ footer .redes i {
 .card {
     transition: 0.4s;
 }
+.card1{
+    color: white;
+    background-color: #181818;
+    box-shadow: 0 4px 12px rgb(75 75 75 / 60%) !important;
+    border-radius: 10px;
+}
 
 .text-preco {
     color: #cc5c34;
@@ -653,4 +659,39 @@ footer .text-sub {
 
 .input-group-text {
     cursor: pointer;
+}
+
+
+.carrinho-item-modern {
+    background: #1b1b1b;
+    border-radius: 8px;
+    padding: 6px 8px;
+    transition: background 0.2s;
+}
+
+.carrinho-item-modern:hover {
+    background: #242424;
+}
+
+.carrinho-item-modern .icon-box {
+    width: 34px;
+    height: 34px;
+    border-radius: 6px;
+    background: #2d2d2d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffc107;
+    font-size: 1.2rem;
+}
+
+.btn-remove-item {
+    color: #dc3545;
+    font-size: 0.9rem;
+    padding: 2px;
+    transition: color 0.2s;
+}
+
+.btn-remove-item:hover {
+    color: #ff5c5c;
 }

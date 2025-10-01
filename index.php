@@ -90,7 +90,7 @@ $produtos = getMaisVendidos($pdo);
                     alt="<?= htmlspecialchars($p['nome']) ?>"
                     class="card-img">
                   <div class="overlay">
-                    <button class="btn-overlay">Ver produto</button>
+                    <a href="loja.php"><button class="btn-overlay">Ver produto</button></a>
                   </div>
                 </div>
                 <div class="card-body text-center">

@@ -1,5 +1,29 @@
 <?php
 include 'conexao.php';
+include 'carrinho.php';
+$carrinhoProdutos = getCarrinhoCompleto($pdo);
+$totalCarrinho = getTotalCarrinho($pdo);
+$descontoAplicado = 0;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cupom'])) {
+    $cupom = trim($_POST['cupom']);
+    $stmt = $pdo->prepare("SELECT * FROM tb_cupons WHERE codigo = ? AND valido_ate >= CURDATE()");
+    $stmt->execute([$cupom]);
+    $cupomData = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($cupomData) {
+        $descontoAplicado = $cupomData['desconto'];
+        $_SESSION['cupom_desconto'] = $descontoAplicado;
+    } else {
+        $_SESSION['cupom_desconto'] = 0;
+    }
+}
+
+if (isset($_SESSION['cupom_desconto'])) {
+    $descontoAplicado = $_SESSION['cupom_desconto'];
+}
+
+$totalComDesconto = $totalCarrinho - ($totalCarrinho * ($descontoAplicado / 100));
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 function getProdutos(PDO $pdo, $search = '', $ordenar = 'recentes', $precoMax = null): array
@@ -54,7 +78,7 @@ $produtos = getProdutos($pdo, $search, $ordenar, $precoMax);
 <body>
     <?php include 'includes/header.php' ?>
 
-    <section class="loja container mt-5">
+    <section class="loja container mt-5 mb-5">
         <form method="GET" id="formFiltros" class="filtros headerloja d-flex justify-content-between mb-4 align-items-end">
 
             <div class="w-25">
@@ -90,72 +114,167 @@ $produtos = getProdutos($pdo, $search, $ordenar, $precoMax);
         </form>
 
         <div class="row">
-            <div class="col-md-9 row">
-                <?php if (!empty($produtos)): ?>
-                    <?php foreach ($produtos as $p): ?>
-                        <div class="col-md-4 mb-4">
-                            <div class="card h-100 shadow-sm border-0 rounded-4 position-relative">
-                                <?php if ($p['destaque']): ?>
-                                    <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Novo Lançamento</span>
-                                <?php endif; ?>
 
-                                <div class="position-relative">
+            <div class="col-lg-9 col-md-8">
+                <div class="row g-4">
+                    <?php if (!empty($produtos)): ?>
+                        <?php foreach ($produtos as $p): ?>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <div class="card h-100 shadow-sm border-0 rounded-4">
+                                    <?php if ($p['destaque']): ?>
+                                        <span class="badge bg-warning text-dark position-absolute top-0 end-0 m-2">Novo</span>
+                                    <?php endif; ?>
+
                                     <img src="assets/img/<?= htmlspecialchars($p['imagem']) ?>"
                                         alt="<?= htmlspecialchars($p['nome']) ?>"
-                                        class="card-img">
-                                </div>
+                                        class="card-img-top">
 
-                                <div class="card-body text-center">
-                                    <h5 class="card-title text-white"><?= htmlspecialchars($p['nome']) ?></h5>
-                                    <p class="card-text fw-bold text-preco">
-                                        R$ <?= number_format($p['preco'], 2, ',', '.') ?>
-                                    </p>
-
-                                    <div class="d-flex justify-content-center mt-3">
-                                        <button class="btn btn-warning btn-sm me-2" title="Adicionar ao Carrinho">
-                                            <i class="bi bi-cart-plus-fill"></i>
-                                        </button>
-                                        <button class="btn btn-secondary btn-sm" title="Ver Detalhes">
-                                            <i class="bi bi-info-circle-fill"></i> Informações
-                                        </button>
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title text-white text-truncate" title="<?= htmlspecialchars($p['nome']) ?>">
+                                            <?= htmlspecialchars($p['nome']) ?>
+                                        </h6>
+                                        <p class="card-text fw-bold text-preco mb-2">
+                                            R$ <?= number_format($p['preco'], 2, ',', '.') ?>
+                                        </p>
+                                        <div class="d-flex justify-content-center gap-2">
+                                            <a href="carrinho.php?add=<?= $p['id'] ?>" class="btn btn-warning btn-sm">
+                                                <i class="bi bi-cart-plus-fill"></i>
+                                            </a>
+                                            <button class="btn btn-secondary btn-sm">
+                                                <i class="bi bi-info-circle-fill"></i> Informações
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p class="text-center text-white">Nenhum produto encontrado com os filtros selecionados.</p>
-                <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-center text-white">Nenhum produto encontrado com os filtros selecionados.</p>
+                    <?php endif; ?>
+                </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="card p-3">
-                    <h5>Carrinho</h5>
-                    <p>Seu Carrinho está Vazio</p>
-                    <input type="text" placeholder="Cupom de Desconto" class="form-control mb-2">
-                    <select class="form-select mb-2">
-                        <option>Selecione o Método</option>
-                    </select>
-                    <div class="d-flex justify-content-between">
-                        <span>Sub-Total:</span><span>R$ 0,00</span>
+
+            <div class="col-lg-3 col-md-4">
+                <div class="card1 p-3 card-carrinho">
+                    <h5 class="text-white mb-3">
+                        <i class="bi bi-cart-fill me-2 text-white"></i> Carrinho
+                    </h5>
+
+                    <?php if (!empty($carrinhoProdutos)): ?>
+                        <?php foreach ($carrinhoProdutos as $item): ?>
+                            <div class="d-flex justify-content-between align-items-center mb-2 carrinho-item-modern">
+                                <div class="d-flex align-items-center flex-grow-1">
+                                    <div class="icon-box me-2">
+                                        <i class="bi bi-box-seam"></i>
+                                    </div>
+                                    <div class="flex-grow-1 text-truncate">
+                                        <div class="fw-semibold text-white small text-truncate" title="<?= htmlspecialchars($item['nome']) ?>">
+                                            <?= htmlspecialchars($item['nome']) ?>
+                                        </div>
+                                        <div class="text-warning fw-bold small">
+                                            <?= $item['quantidade'] ?>x R$ <?= number_format($item['preco'], 2, ',', '.') ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="carrinho.php?remove=<?= $item['id'] ?>" class="btn-remove-item ms-2" title="Remover">
+                                    <i class="bi bi-x-lg"></i>
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="text-white small">Seu carrinho está vazio</p>
+                    <?php endif; ?>
+
+                    <hr class="text-secondary my-3">
+
+
+                    <form method="POST">
+                        <div class="mb-2">
+                            <label class="form-label small text-white">Cupom de Desconto</label>
+                            <div class="input-group input-group-sm">
+                                <input type="text" name="cupom" class="form-control" placeholder="Insira o cupom">
+                                <button class="btn btn-secondary">Aplicar</button>
+                            </div>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="form-label small text-white">Método de Pagamento</label>
+                            <select name="metodo_pagamento" class="form-select form-select-sm">
+                                <option value="">Selecione o Método</option>
+                                <option value="pix">PIX</option>
+                                <option value="cartao">Cartão</option>
+                                <option value="boleto">Boleto</option>
+                            </select>
+                        </div>
+                    </form>
+
+
+                    <div class="totais mb-3">
+                        <div class="d-flex justify-content-between small text-white mb-1">
+                            <span>Sub-Total</span>
+                            <span>R$ <?= number_format($totalCarrinho, 2, ',', '.') ?></span>
+                        </div>
+                        <div class="d-flex justify-content-between small text-white mb-1">
+                            <span>Desconto</span>
+                            <span><?= number_format($descontoAplicado, 2, ',', '.') ?>%</span>
+                        </div>
+                        <div class="d-flex justify-content-between fw-bold text-white">
+                            <span>Total</span>
+                            <span>R$ <?= number_format($totalComDesconto, 2, ',', '.') ?></span>
+                        </div>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <span>Desconto:</span><span>0%</span>
-                    </div>
-                    <div class="d-flex justify-content-between fw-bold">
-                        <span>Total:</span><span>R$ 0,00</span>
-                    </div>
-                    <div class="form-check mt-2">
+
+                    <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" id="termosCheck">
-                        <label class="form-check-label" for="termosCheck">
-                            Concordo com os Termos de Serviço
+                        <label class="form-check-label small text-white" for="termosCheck">
+                            Eu concordo com os <span class="text-warning termos-link" style="cursor:pointer;">Termos de Serviço</span> e desejo continuar minha compra
                         </label>
                     </div>
-                    <button class="btn btn-warning w-100 mt-3">Confirmar Pedido</button>
+
+                    <form action="checkout.php" method="POST">
+                        <button type="submit" class="btn btn-warning w-100 fw-bold" id="confirmarPedido" disabled>
+                            Confirmar Pedido
+                        </button>
+                    </form>
+
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+    <div class="modal fade" id="modalTermos" tabindex="-1" aria-labelledby="modalTermosLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-dark text-white rounded-4 border-0">
+
+                <div class="modal-header border-0 d-flex justify-content-between align-items-center">
+                    <h5 class="modal-title fw-bold" id="modalTermosLabel">Termos de Serviço</h5>
+                    <div class="flags d-flex gap-2">
+                        <img src="assets/img/br.png" alt="Português" class="flag" data-lang="pt" style="cursor:pointer; width:24px;">
+                        <img src="assets/img/us.png" alt="English" class="flag" data-lang="en" style="cursor:pointer; width:24px;">
+                        <img src="assets/img/es.png" alt="Español" class="flag" data-lang="es" style="cursor:pointer; width:24px;">
+                    </div>
+                    <button type="button" class="btn-close btn-close-white ms-2" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+
+                <div class="modal-body" id="modal-termos-conteudo">
+                    <?php include "includes/idioma/termos-pt.php"; ?>
+                </div>
+
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-warning" id="aceitarTermos">Concordo com os Termos</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+
+
 
     <?php include 'includes/footer.php' ?>
     <?php include 'includes/scripts.php' ?>
