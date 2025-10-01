@@ -10,16 +10,22 @@ if (isset($_GET['add'])) {
     $id = (int) $_GET['add'];
 
     if (isset($_SESSION['carrinho'][$id])) {
-        $_SESSION['carrinho'][$id] = (int)$_SESSION['carrinho'][$id] + 1;
-    } 
-
-    else {
+        $_SESSION['toasts'][] = [
+            'tipo' => 'erro',
+            'mensagem' => 'Esse produto já está no carrinho!'
+        ];
+    } else {
         $_SESSION['carrinho'][$id] = 1;
+        $_SESSION['toasts'][] = [
+            'tipo' => 'sucesso',
+            'mensagem' => 'Produto adicionado ao carrinho!'
+        ];
     }
 
     header('Location: loja.php');
     exit;
 }
+
 
 if (isset($_GET['remove'])) {
     $id = (int) $_GET['remove'];
@@ -29,7 +35,8 @@ if (isset($_GET['remove'])) {
 }
 
 
-function getCarrinhoCompleto(PDO $pdo): array {
+function getCarrinhoCompleto(PDO $pdo): array
+{
     $carrinho = $_SESSION['carrinho'] ?? [];
     $produtos = [];
 
@@ -62,7 +69,8 @@ function getCarrinhoCompleto(PDO $pdo): array {
 }
 
 
-function getTotalCarrinho(PDO $pdo): float {
+function getTotalCarrinho(PDO $pdo): float
+{
     $produtos = getCarrinhoCompleto($pdo);
     $total = 0;
     foreach ($produtos as $p) {

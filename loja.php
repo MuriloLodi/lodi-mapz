@@ -41,7 +41,7 @@ function getProdutos(PDO $pdo, $search = '', $ordenar = 'recentes', $precoMax = 
             $orderBy = "id DESC";
     }
 
-    $sql = "SELECT id, nome, imagem, preco, destaque FROM tb_produtos WHERE 1=1";
+    $sql = "SELECT id, nome, imagem, preco, destaque, descricao, tamanho_mb FROM tb_produtos WHERE 1=1";
     $params = [];
 
     if (!empty($search)) {
@@ -140,9 +140,17 @@ $produtos = getProdutos($pdo, $search, $ordenar, $precoMax);
                                             <a href="carrinho.php?add=<?= $p['id'] ?>" class="btn btn-warning btn-sm">
                                                 <i class="bi bi-cart-plus-fill"></i>
                                             </a>
-                                            <button class="btn btn-secondary btn-sm">
+                                            <button
+                                                class="btn btn-secondary btn-sm btn-info-produto"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#modalInfo"
+                                                data-nome="<?= htmlspecialchars($p['nome']) ?>"
+                                                data-descricao="<?= htmlspecialchars($p['descricao']) ?>"
+                                                data-preco="<?= number_format($p['preco'], 2, ',', '.') ?>"
+                                                data-tamanho="<?= htmlspecialchars($p['tamanho_mb']) ?>">
                                                 <i class="bi bi-info-circle-fill"></i> Informações
                                             </button>
+
                                         </div>
                                     </div>
                                 </div>
@@ -269,6 +277,35 @@ $produtos = getProdutos($pdo, $search, $ordenar, $precoMax);
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                     <button type="button" class="btn btn-warning" id="aceitarTermos">Concordo com os Termos</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 start-0 p-3 d-flex flex-column" style="z-index:9999; gap: .5rem;">
+        <?php if (isset($_SESSION['toasts']) && is_array($_SESSION['toasts'])): ?>
+            <?php foreach ($_SESSION['toasts'] as $toast): ?>
+                <div class="toast align-items-center text-white 
+                <?= $toast['tipo'] == 'sucesso' ? 'bg-success' : 'bg-danger' ?> border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <?= htmlspecialchars($toast['mensagem']) ?>
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            <?php unset($_SESSION['toasts']); ?>
+        <?php endif; ?>
+    </div>
+    <div class="modal fade" id="modalInfo" tabindex="-1" aria-labelledby="modalInfoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-dark text-white rounded-4 border-0">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title fw-bold" id="modalInfoLabel">Informações do Produto</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body" id="modalInfoContent">
                 </div>
             </div>
         </div>

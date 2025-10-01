@@ -121,9 +121,9 @@ $produtos = getMaisVendidos($pdo);
 
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                  aria-expanded="true" aria-controls="collapseOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
                   Como funcionam as encomendas?
+                  <i class="fa-solid fa-chevron-up ms-auto"></i>
                 </button>
               </h2>
               <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
@@ -136,9 +136,9 @@ $produtos = getMaisVendidos($pdo);
 
             <div class="accordion-item mt-3">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
                   Os mapas pesam muito?
+                  <i class="fa-solid fa-chevron-up ms-auto"></i>
                 </button>
               </h2>
               <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -151,9 +151,9 @@ $produtos = getMaisVendidos($pdo);
 
             <div class="accordion-item mt-3">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
                   Vocês fazem mapas de qualquer tipo?
+                  <i class="fa-solid fa-chevron-up ms-auto"></i>
                 </button>
               </h2>
               <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -166,9 +166,9 @@ $produtos = getMaisVendidos($pdo);
 
             <div class="accordion-item mt-3">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
                   Qual o tempo médio de entrega?
+                  <i class="fa-solid fa-chevron-up ms-auto"></i>
                 </button>
               </h2>
               <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -181,9 +181,9 @@ $produtos = getMaisVendidos($pdo);
 
             <div class="accordion-item mt-3">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive">
                   Como posso acompanhar minha encomenda?
+                  <i class="fa-solid fa-chevron-up ms-auto"></i>
                 </button>
               </h2>
               <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -196,9 +196,9 @@ $produtos = getMaisVendidos($pdo);
 
             <div class="accordion-item mt-3">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                  data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix">
                   Como entro em contato para fazer meu pedido?
+                  <i class="fa-solid fa-chevron-up ms-auto"></i>
                 </button>
               </h2>
               <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">

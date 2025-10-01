@@ -684,7 +684,11 @@ footer .text-sub {
     color: #ffc107;
     font-size: 1.2rem;
 }
-
+.carrinho-item-modern .fw-semibold {
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 180px;
+}
 .btn-remove-item {
     color: #dc3545;
     font-size: 0.9rem;
@@ -694,4 +698,58 @@ footer .text-sub {
 
 .btn-remove-item:hover {
     color: #ff5c5c;
+}
+
+.accordion-button {
+  background-color: transparent;
+  color: #fff;
+}
+
+.accordion-item {
+  background-color: transparent;
+  border: 1px solid #b25d2d;
+}
+
+.accordion-button:not(.collapsed) {
+  color: #fff;
+  background-color: #1a1a1a;
+  box-shadow: none;
+}
+.accordion-button::after {
+  display: none;
+}
+.accordion-button::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ffffff' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+  filter: none; 
+}
+
+.accordion-button:not(.collapsed)::after {
+  transform: rotate(180deg) !important;
+}
+
+.accordion-button {
+  background: transparent;
+  color: #fff;
+  box-shadow: none;
+}
+
+.accordion-item {
+  background: transparent;
+  border: 1px solid #b25d2d;
+  border-radius: 10px;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+}
+
+.accordion-button .fa-chevron-up {
+  transition: transform 0.3s ease;
+  transform: rotate(180deg);
+}
+
+.accordion-button:not(.collapsed) .fa-chevron-up {
+  transform: rotate(0deg);
 }

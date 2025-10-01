@@ -59,3 +59,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.toast').forEach(toastEl => {
+    const toast = new bootstrap.Toast(toastEl);
+    toast.show();
+  });
+});
+
+document.querySelectorAll(".btn-info-produto").forEach(btn => {
+    btn.addEventListener("click", function() {
+        const nome = this.getAttribute("data-nome");
+        const descricao = this.getAttribute("data-descricao") || "Sem descrição";
+        const preco = this.getAttribute("data-preco");
+        const tamanho = this.getAttribute("data-tamanho") || "N/D";
+
+        document.getElementById("modalInfoContent").innerHTML = `
+            <h4>${nome}</h4>
+            <p><strong>Descrição:</strong> ${descricao}</p>
+            <p><strong>Tamanho:</strong> ${tamanho} MB</p>
+            <p><strong>Preço:</strong> R$ ${preco}</p>
+        `;
+    });
+});

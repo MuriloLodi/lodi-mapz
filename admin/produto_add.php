@@ -13,6 +13,8 @@ if (isset($_POST['salvar'])) {
     $nome = $_POST['nome'];
     $preco = $_POST['preco'];
     $descricao = $_POST['descricao'];
+    $tamanho_mb = $_POST['tamanho_mb'];
+
 
     if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
         $imgName = time() . '_' . $_FILES['imagem']['name'];
@@ -21,8 +23,8 @@ if (isset($_POST['salvar'])) {
         $imgName = 'default.png';
     }
 
-    $stmt = $pdo->prepare("INSERT INTO tb_produtos (nome, preco, descricao, imagem) VALUES (?, ?, ?, ?)");
-    if ($stmt->execute([$nome, $preco, $descricao, $imgName])) {
+    $stmt = $pdo->prepare("INSERT INTO tb_produtos (nome, preco, descricao, imagem, tamanho_mb) VALUES (?, ?, ?, ?, ?)");
+    if ($stmt->execute([$nome, $preco, $descricao, $imgName, $tamanho_mb])) {
         $msg = "Produto adicionado com sucesso!";
     } else {
         $msg = "Erro ao adicionar produto!";
@@ -61,6 +63,10 @@ if (isset($_POST['salvar'])) {
                 <div class="mb-3">
                     <label>Imagem</label>
                     <input type="file" name="imagem" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label>Tamanho (MB)</label>
+                    <input type="text" name="tamanho_mb" class="form-control" placeholder="Ex: 120" required>
                 </div>
                 <button type="submit" name="salvar" class="btn btn-success">Salvar</button>
                 <a href="produtos.php" class="btn btn-secondary">Voltar</a>
