@@ -1,4 +1,4 @@
-<footer>
+<footer class="site-footer mt-auto">
   <div class="container">
     <div class="row mt-3 mb-3">
       <div class="col-sm logo align-self-center text-center">
@@ -18,7 +18,6 @@
           <li><a class="text-sub" href="quemsomos.php">Quem somos</a></li>
         </ul>
       </div>
-
       <div class="col-sm">
         <p class="fw-bold text-default mb-0">Sociais</p>
         <ul class="d-flex redes list-unstyled">
@@ -32,8 +31,7 @@
     <div class="is-border mb-2"></div>
     <div class="copyr justify-content-between d-flex">
       <p class="text-gray">Copyright 2025 © Lodz Network • CNPJ xx.xxx.xxx/xxxx-xx • Toledo/PR</p>
-      <p class=" text-gray">Desenvolvimento: Lodi Service</p>
+      <p class="text-gray">Desenvolvimento: Lodi Service</p>
     </div>
-  </div>
   </div>
 </footer>

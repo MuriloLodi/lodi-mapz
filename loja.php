@@ -140,16 +140,9 @@ $produtos = getProdutos($pdo, $search, $ordenar, $precoMax);
                                             <a href="carrinho.php?add=<?= $p['id'] ?>" class="btn btn-warning btn-sm">
                                                 <i class="bi bi-cart-plus-fill"></i>
                                             </a>
-                                            <button
-                                                class="btn btn-secondary btn-sm btn-info-produto"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#modalInfo"
-                                                data-nome="<?= htmlspecialchars($p['nome']) ?>"
-                                                data-descricao="<?= htmlspecialchars($p['descricao']) ?>"
-                                                data-preco="<?= number_format($p['preco'], 2, ',', '.') ?>"
-                                                data-tamanho="<?= htmlspecialchars($p['tamanho_mb']) ?>">
+                                            <a href="produto.php?id=<?= (int)$p['id'] ?>" class="btn btn-secondary btn-sm">
                                                 <i class="bi bi-info-circle-fill"></i> Informações
-                                            </button>
+                                            </a>
 
                                         </div>
                                     </div>
@@ -273,7 +266,7 @@ $produtos = getProdutos($pdo, $search, $ordenar, $precoMax);
             <?php unset($_SESSION['toasts']); ?>
         <?php endif; ?>
     </div>
-                  
+
     <?php include 'includes/modal/modaltermos.php' ?>
     <?php include 'includes/modal/modalinfo.php' ?>
     <?php include 'includes/footer.php' ?>

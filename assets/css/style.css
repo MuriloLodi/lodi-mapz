@@ -753,3 +753,7 @@ footer .text-sub {
 .accordion-button:not(.collapsed) .fa-chevron-up {
   transform: rotate(0deg);
 }
+html, body { height: 100%; }
+body { display: flex; flex-direction: column; min-height: 100vh; }
+main { flex: 1 0 auto; }
+.site-footer { margin-top: auto; }

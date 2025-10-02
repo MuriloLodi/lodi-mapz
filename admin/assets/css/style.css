@@ -1,12 +1,12 @@
 body {
-    max-height: 100vh;
+    max-height: 100%;
 }
 
 /*===SIDE BAR===*/
 main {
-    height: 100vh;
+    height: 100%;
     height: -webkit-fill-available;
-    max-height: 100vh;
+    max-height: 100%;
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -134,4 +134,14 @@ main {
 
 .card:hover {
     transform: translateY(-5px);
+}
+
+.layout{
+  min-height: 100vh;   
+  display: flex;
+}
+
+.sidebar{
+  background: #0f1117;   
+  min-height: 100vh;      
 }

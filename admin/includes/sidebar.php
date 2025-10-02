@@ -1,4 +1,4 @@
-    <div class="vh-100 d-flex flex-nowrap">
+    <div class="d-flex flex-nowrap">
         <div
             class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark"
             style="width: 280px">
