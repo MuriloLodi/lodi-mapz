@@ -88,10 +88,24 @@
 <body>
     <?php include 'includes/header.php' ?>
     <div class="container">
+
+        <img src="" alt="">
+        <div class="row" style="background-image: linear-gradient(to right, rgba(15, 26, 44, 0.8) 20%, rgba(15, 26, 44, 0) 50%, rgba(15, 26, 44, 0.8) 80%), url(https://i.imgur.com/VBVzWMc.png);    background-size: cover;
+    background-position: center 60%;
+    background-repeat: no-repeat;
+    color: rgb(255, 255, 255);
+    padding: 30px;
+    border-radius: 10px;
+}">     
+<div class="col">
         <h1>Hospital LS</h1>
         <p class="price">R$ 40</p>
+        </div>
+        <div>
         <a href="#" class="btn">➕ ADICIONAR AO CARRINHO</a><br>
         <a href="#" class="back">⬅ Voltar aos Produtos</a>
+        </div>
+        </div>
 
         <div class="section">
             <p><span class="highlight">Peso:</span> 2,87 MB</p>
