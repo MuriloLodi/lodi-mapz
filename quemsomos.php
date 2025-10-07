@@ -66,7 +66,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
     <section class="team-section py-5">
         <div class="container">
             <div class="row align-items-center mb-5">
-                <div class="col-lg-5">
+                <div class="col-lg-5 cent">
                     <span class="text-uppercase textmut small">QUEM FAZ ACONTECER</span>
                     <h2 class="fw-bold text-white mt-2">CONHEÇA O TIME</h2>
                     <p class="text-white">

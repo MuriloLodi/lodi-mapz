@@ -376,6 +376,7 @@ footer .logo .copy {
     display: flex;
     align-items: center;
     gap: 20px;
+    
 }
 
 @media (max-width: 768px) {
@@ -393,6 +394,7 @@ footer .logo .copy {
         right: 0;
         background: #1d1c1c;
         padding: 15px;
+        margin-top: 30px;
     }
 
     .nav-menu.active {
@@ -489,15 +491,19 @@ footer .text-sub {
 }
 
 .apresent2 {
-    position: relative;
-    min-height: 35vh;
-    overflow: hidden;
+  position: relative;
+  min-height: 40vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .apresent2 h1 {
-    font-size: 120px;
-    font-weight: 700;
-    color: white;
+  font-size: 64px;
+  font-weight: 700;
+  color: white;
 }
 
 .sobre .lead {
@@ -757,3 +763,138 @@ html, body { height: 100%; }
 body { display: flex; flex-direction: column; min-height: 100vh; }
 main { flex: 1 0 auto; }
 .site-footer { margin-top: auto; }
+
+@media (max-width: 768px) {
+  .filtros {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;          
+  }
+  .filtros > div {
+    width: 100% !important;
+  }
+  .filtros .form-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+}
+@media (max-width: 768px) {
+  .headerloja {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .headerloja .form-label {
+    margin-bottom: 6px;
+  }
+
+  .filtros {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .filtros > div {
+    width: 100% !important;
+  }
+
+  .card1.card-carrinho {
+    margin-top: 20px; 
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .card1.card-carrinho form,
+  .card1.card-carrinho .totais,
+  .card1.card-carrinho .form-check {
+    margin-bottom: 14px;
+  }
+
+}
+@media (max-width: 768px) {
+  .card1.card-carrinho .input-group {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+  }
+
+  .card1.card-carrinho .input-group input {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .card1.card-carrinho .input-group button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+@media (max-width: 768px) {
+  .apresent2 {
+    min-height: 30vh;
+    padding: 40px 0;
+  }
+  .text-uppercase{
+    text-align: center !important;
+  }
+
+  .apresent2 h1 {
+    font-size: 36px;
+  }
+
+  .sobre .row {
+    flex-direction: column-reverse;
+    text-align: center;
+  }
+  .cent{
+    text-align: center;
+  }
+
+  .sobre img {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .carouselquem {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .carouselquem .carousel-caption {
+    padding: 20px;
+    text-align: center !important;
+  }
+
+  .carouselquem h2 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .carouselquem p {
+    font-size: 0.95rem;
+  }
+
+  .team-section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .team-section .card {
+    margin-bottom: 20px;
+  }
+
+  .team-section h2 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .team-section p {
+    text-align: center;
+  }
+}
+

@@ -10,16 +10,17 @@ function loadEnv($path = __DIR__ . '/.env') {
     }
 }
 
-
-session_start();
-include 'conexao.php';
+if (session_status() === PHP_SESSION_NONE) session_start();
+require 'conexao.php';
 
 loadEnv();
-$access_token = $_ENV['MERCADOPAGO_ACCESS_TOKEN'];
+$access_token = $_ENV['MERCADOPAGO_ACCESS_TOKEN'] ?? '';
 
+$descontoPercent = isset($_SESSION['cupom_desconto']) ? (float)$_SESSION['cupom_desconto'] : 0.0;
+$factor = max(0, min(1, 1 - ($descontoPercent / 100)));
 
 $items = [];
-$total = 0;
+$total = 0.0;
 
 if (!empty($_SESSION['carrinho'])) {
     foreach ($_SESSION['carrinho'] as $id => $quantidade) {
@@ -28,13 +29,22 @@ if (!empty($_SESSION['carrinho'])) {
         $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($produto) {
+            $precoOriginal   = (float)$produto['preco'];
+            $precoComDesc    = round($precoOriginal * $factor, 2);
+
+            $titulo = $produto['nome'];
+            if ($descontoPercent > 0) {
+                $titulo .= " (c/ desc. " . number_format($descontoPercent, 2, ',', '.') . "%)";
+            }
+
             $items[] = [
-                "title" => $produto['nome'],
-                "quantity" => (int)$quantidade,
-                "unit_price" => (float)$produto['preco'],
+                "title"       => $titulo,
+                "quantity"    => (int)$quantidade,
+                "unit_price"  => $precoComDesc,
                 "currency_id" => "BRL"
             ];
-            $total += $produto['preco'] * $quantidade;
+
+            $total += $precoComDesc * (int)$quantidade;
         }
     }
 } else {
@@ -48,8 +58,7 @@ foreach ($items as $item) {
 $tituloCompra = implode(' | ', $titulos);
 
 $data = [
-    "items" => $items,                      
-    "title" => $tituloCompra,            
+    "items" => $items, 
     "statement_descriptor" => "Lodz Mapz",
     "external_reference" => uniqid('pedido_'),
     "back_urls" => [
@@ -57,31 +66,30 @@ $data = [
         "failure" => "https://SEU_DOMINIO/erro.php",
         "pending" => "https://SEU_DOMINIO/pendente.php"
     ],
-    //"auto_return" => "approved"
+    "metadata" => [
+        "titulo_compra" => mb_substr($tituloCompra, 0, 190),
+        "desconto_percent" => $descontoPercent
+    ]
 ];
 
-
-
 $ch = curl_init();
-
 curl_setopt($ch, CURLOPT_URL, "https://api.mercadopago.com/checkout/preferences");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES));
 curl_setopt($ch, CURLOPT_HTTPHEADER, [
     "Content-Type: application/json",
     "Authorization: Bearer $access_token"
 ]);
 
 $response = curl_exec($ch);
-
 if (curl_errno($ch)) {
     die('Erro CURL: ' . curl_error($ch));
 }
-
 curl_close($ch);
 
 $preference = json_decode($response, true);
+
 
 if (isset($preference['init_point'])) {
     header("Location: " . $preference['init_point']);

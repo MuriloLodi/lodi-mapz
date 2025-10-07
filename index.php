@@ -42,7 +42,7 @@ $produtos = getMaisVendidos($pdo);
           <p class="title">Lodz <span>Network</span></p>
           <p class="stitle">Desde 2023, a Lodz Network transforma ideias em mapas com alma. Realismo, leveza e
             identidade exatamente como o seu projeto merece.</p>
-          <p class="btn">Ver produtos</p>
+          <a href="loja.php"><p class="btn">Ver produtos</p></a>
         </div>
         <div class="col align-self-center align-items-center">
           <ul class="d-flex redes list-unstyled">

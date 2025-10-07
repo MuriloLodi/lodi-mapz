@@ -190,15 +190,14 @@ $produtos = getProdutos($pdo, $search, $ordenar, $precoMax);
                     <hr class="text-secondary my-3">
 
 
-                    <form method="POST">
+                    <form method="POST" id="cupomForm" autocomplete="off" novalidate>
                         <div class="mb-2">
                             <label class="form-label small text-white">Cupom de Desconto</label>
                             <div class="input-group input-group-sm">
-                                <input type="text" name="cupom" class="form-control" placeholder="Insira o cupom">
-                                <button class="btn btn-secondary">Aplicar</button>
+                                <input type="text" name="cupom" id="cupomInput" class="form-control" placeholder="Insira o cupom">
+                                <button class="btn btn-secondary" id="btnAplicarCupom" type="submit">Aplicar</button>
                             </div>
                         </div>
-
 
                         <div class="mb-3">
                             <label class="form-label small text-white">Método de Pagamento</label>
@@ -212,20 +211,22 @@ $produtos = getProdutos($pdo, $search, $ordenar, $precoMax);
                     </form>
 
 
+
                     <div class="totais mb-3">
                         <div class="d-flex justify-content-between small text-white mb-1">
                             <span>Sub-Total</span>
-                            <span>R$ <?= number_format($totalCarrinho, 2, ',', '.') ?></span>
+                            <span id="subtotalValor">R$ <?= number_format($totalCarrinho, 2, ',', '.') ?></span>
                         </div>
                         <div class="d-flex justify-content-between small text-white mb-1">
                             <span>Desconto</span>
-                            <span><?= number_format($descontoAplicado, 2, ',', '.') ?>%</span>
+                            <span id="descontoValor"><?= number_format($descontoAplicado, 2, ',', '.') ?>%</span>
                         </div>
                         <div class="d-flex justify-content-between fw-bold text-white">
                             <span>Total</span>
-                            <span>R$ <?= number_format($totalComDesconto, 2, ',', '.') ?></span>
+                            <span id="totalValor">R$ <?= number_format($totalComDesconto, 2, ',', '.') ?></span>
                         </div>
                     </div>
+
 
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" id="termosCheck">
@@ -289,6 +290,103 @@ $produtos = getProdutos($pdo, $search, $ordenar, $precoMax);
             clearTimeout(search.timer);
             search.timer = setTimeout(() => form.submit(), 600);
         });
+
+        function formatBRL(valor) {
+            return valor.toLocaleString('pt-BR', {
+                style: 'currency',
+                currency: 'BRL'
+            });
+        }
+
+        function showToast(mensagem, tipo = 'sucesso') {
+            const container = document.querySelector('.toast-container') || (function() {
+                const c = document.createElement('div');
+                c.className = 'toast-container position-fixed bottom-0 start-0 p-3 d-flex flex-column';
+                c.style.zIndex = '9999';
+                c.style.gap = '.5rem';
+                document.body.appendChild(c);
+                return c;
+            })();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast align-items-center text-white ' + (tipo === 'sucesso' ? 'bg-success' : 'bg-danger') + ' border-0';
+            toast.setAttribute('role', 'alert');
+            toast.setAttribute('aria-live', 'assertive');
+            toast.setAttribute('aria-atomic', 'true');
+            toast.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">${mensagem}</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    `;
+            container.appendChild(toast);
+            const bsToast = new bootstrap.Toast(toast, {
+                delay: 2500
+            });
+            bsToast.show();
+            toast.addEventListener('hidden.bs.toast', () => toast.remove());
+        }
+
+        (function() {
+            const formCupom = document.getElementById('cupomForm');
+            const inputCupom = document.getElementById('cupomInput');
+            const btnCupom = document.getElementById('btnAplicarCupom');
+
+            const spanSubtotal = document.getElementById('subtotalValor');
+            const spanDesconto = document.getElementById('descontoValor');
+            const spanTotal = document.getElementById('totalValor');
+
+            if (!formCupom) return;
+
+            formCupom.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const cupom = (inputCupom.value || '').trim();
+                if (!cupom) {
+                    showToast('Informe um cupom.', 'erro');
+                    return;
+                }
+
+                btnCupom.disabled = true;
+                btnCupom.innerText = 'Aplicando...';
+
+                try {
+                    const fd = new FormData();
+                    fd.append('cupom', cupom);
+
+                    const resp = await fetch('api_aplicar_cupom.php', {
+                        method: 'POST',
+                        body: fd
+                    });
+
+                    const data = await resp.json();
+
+                    if (typeof data.subtotal === 'number') {
+                        spanSubtotal.textContent = formatBRL(data.subtotal);
+                    }
+                    if (typeof data.desconto_percent === 'number') {
+                        spanDesconto.textContent = data.desconto_percent.toLocaleString('pt-BR', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        }) + '%';
+                    }
+                    if (typeof data.total === 'number') {
+                        spanTotal.textContent = formatBRL(data.total);
+                    }
+
+                    if (data.ok) {
+                        showToast(data.msg || 'Cupom aplicado!', 'sucesso');
+                    } else {
+                        showToast(data.msg || 'Cupom inválido.', 'erro');
+                    }
+                } catch (err) {
+                    showToast('Erro ao aplicar cupom.', 'erro');
+                } finally {
+                    btnCupom.disabled = false;
+                    btnCupom.innerText = 'Aplicar';
+                }
+            });
+        })();
     </script>
 </body>
 
